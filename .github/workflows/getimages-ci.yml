@@ -31,6 +31,6 @@ jobs:
         echo "change images tag"
         docker tag k8s.gcr.io/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de   registry.cn-hangzhou.aliyuncs.com/foreign_cjt/ingress-nginx/controller:v1.1.1 
         echo "push images to aliyun "
-        docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de 
+        docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/ingress-nginx/controller:v1.1.1
         
         
