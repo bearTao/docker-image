@@ -22,6 +22,9 @@ jobs:
     ## docker https://github.com/Azure/docker-login
     - name: 获取gcr.io镜像
       run: |
+        echo ${{ secrets.MY_ALI_REGISTRY_USERNAME}}
+        echo ${{ secrets.MY_ALI_REGISTRY_PASSWD}}
+        echo ${NEW_REGISTRY_URL} 
         docker login -u ${{ secrets.MY_ALI_REGISTRY_USER}} -p ${{ secrets.MY_ALI_REGISTRY_PASSWORD}} ${NEW_REGISTRY_URL}
         echo "docker pull from k8s gcr io"
         docker pull k8s.gcr.io/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de
