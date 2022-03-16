@@ -11,8 +11,6 @@ on:
     paths:
       - '.github/workflows/**'
 
-
-
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -26,7 +24,8 @@ jobs:
       run: |
         docker login -u ${{ secrets.MY_ALI_REGISTRY_USER}} -p ${{ secrets.MY_ALI_REGISTRY_PASSWORD}} ${NEW_REGISTRY_URL}
         echo "docker pull from k8s gcr io"
-        docker pull k8s.gcr.io/descheduler/descheduler:v0.22.1
-        docker tag k8s.gcr.io/descheduler/descheduler:v0.22.1   registry.cn-hangzhou.aliyuncs.com/foreign_cjt/descheduler:v0.22.1
-        docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/descheduler:v0.22.1
+        docker pull k8s.gcr.io/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de
+        docker tag k8s.gcr.io/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de   registry.cn-hangzhou.aliyuncs.com/foreign_cjt/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de 
+        docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de 
+        
         
