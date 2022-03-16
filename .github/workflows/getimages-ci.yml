@@ -5,7 +5,7 @@ env:
   NEW_REGISTRY_URL: "registry.cn-hangzhou.aliyuncs.com"
   NEW_REGISTRY_URL2: "docker.io/skydoor/"
 
-
+ 
 on:
   push:
     paths:
