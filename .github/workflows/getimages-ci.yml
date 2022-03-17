@@ -4,7 +4,7 @@ name: Get Docker images from gcr
 env:
   NEW_REGISTRY_URL: "registry.cn-hangzhou.aliyuncs.com"
   NEW_REGISTRY_URL2: "docker.io/skydoor/"
-
+  
  
 on:
   push:
@@ -22,15 +22,23 @@ jobs:
     ## docker https://github.com/Azure/docker-login
     - name: 获取gcr.io镜像
       run: |
-        echo ${{ secrets.MY_ALI_REGISTRY_USERNAME}}
-        echo ${{ secrets.MY_ALI_REGISTRY_PASSWD}}
-        echo ${NEW_REGISTRY_URL} 
-        docker login -u ${{ secrets.MY_ALI_REGISTRY_USER}} -p ${{ secrets.MY_ALI_REGISTRY_PASSWORD}} ${NEW_REGISTRY_URL}
-        echo "docker pull from k8s gcr io"
-        docker pull k8s.gcr.io/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de
-        echo "change images tag"
-        docker tag k8s.gcr.io/ingress-nginx/controller:v1.1.1@sha256:0bc88eb15f9e7f84e8e56c14fa5735aaa488b840983f87bd79b1054190e660de   registry.cn-hangzhou.aliyuncs.com/foreign_cjt/controller:v1.1.1 
-        echo "push images to aliyun "
-        docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/controller:v1.1.1
+        ## echo ${{ secrets.MY_ALI_REGISTRY_USERNAME}}
+        ## echo ${{ secrets.MY_ALI_REGISTRY_PASSWD}}
+        ## echo ${NEW_REGISTRY_URL} 
+		docker login -u ${{ secrets.MY_ALI_REGISTRY_USER}} -p ${{ secrets.MY_ALI_REGISTRY_PASSWORD}} ${NEW_REGISTRY_URL}
+		
+		images=(k8s.gcr.io/ingress-nginx/controller:v1.1.2@sha256:28b11ce69e57843de44e3db6413e98d09de0f6688e33d4bd384002a44f78405c k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1@sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660 k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1@sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660 )
+		pre="k8s.gcr.io/ingress-nginx/"
+		for image in ${images[@]}
+		do
+			echo "docker pull from $pre"
+			docker pull $image	
+			#image_name=`echo $image | awk -F "[$pre,@]" '{print $2}'`
+      image_name=`echo $image | awk -F "$pre" '{print $2}' | awk -F '@'  '{print $1}'`
+			echo "change images tag"
+			docker tag $image registry.cn-hangzhou.aliyuncs.com/foreign_cjt/$image_name
+			echo "push images to aliyun "
+			docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/$image_name
+		done
         
         
