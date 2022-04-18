@@ -38,9 +38,9 @@ jobs:
             image_name=`echo $image | awk -F "$pre" '{print $2}' | awk -F '@'  '{print $1}'`
             echo "image_name: $image_name"
             echo "change images tag"
-            docker tag $image registry.cn-hangzhou.aliyuncs.com/foreign_cjt/${{ pre }}${{ image_name }}
+            docker tag $image registry.cn-hangzhou.aliyuncs.com/foreign_cjt/$pre$image_name
             echo "push images to aliyun "
-            docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/${{ pre }}${{ image_name }}
+            docker push registry.cn-hangzhou.aliyuncs.com/foreign_cjt/$pre$image_name
         done
         
         
